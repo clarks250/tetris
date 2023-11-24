@@ -1,12 +1,15 @@
 import Game from "./src/game.js";
 import View from "./src/view.js";
 import Controller from "./src/controller.js";
+import AudioManager from "./src/audiomanager.js";
 
 const root = document.querySelector("#root");
 
-const game = new Game();
+const audioManager = new AudioManager();
+const game = new Game(audioManager);
 const view = new View(root, 480, 640, 20, 10);
-const controller = new Controller(game, view);
+const controller = new Controller(game, view, audioManager);
+audioManager.initializeButtons();
 
 window.game = game;
 window.view = view;

@@ -6,8 +6,9 @@ export default class Game {
     4: 1200,
   };
 
-  constructor(){
+  constructor(audioManager){
     this.reset();
+    this.audioManager = audioManager;
   }
 
   get level() {
@@ -237,6 +238,7 @@ export default class Game {
         continue;
       } else if (numbersOfBlocks === columns) {
         lines.unshift(y);
+        this.audioManager.playClearLine();
       }
     }
     for (let index of lines) {

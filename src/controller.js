@@ -1,20 +1,10 @@
 export default class Controller {
-  constructor(game, view) {
+  constructor(game, view, audioManager) {
     this.game = game;
     this.view = view;
+    this.audioManager = audioManager;
     this.isPlaying = false;
     this.intervalId = null;
-    this.sound = new Howl({
-      src: ['./src/A-Ha - Take On Me (Instrumental Version).mp3'],
-      volume: 0.7,
-      loop: true,
-    });
-
-    this.toggleButton = document.getElementById('toggleButton');
-    this.volumeSlider = document.getElementById('volumeSlider');
-
-    this.toggleButton.addEventListener('click', this.toggleMusic.bind(this));
-    this.volumeSlider.addEventListener('input', this.changeVolume.bind(this));
 
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
     document.addEventListener("keyup", this.handleKeyUp.bind(this));
@@ -30,27 +20,28 @@ export default class Controller {
     this.isPlaying = true;
     this.updateView();
     this.startTimer();
-    this.sound.play();
+    this.audioManager.play();
+
   }
 
   pause() {
     this.isPlaying = false;
     this.stopTimer();
     this.updateView();
-    this.sound.pause();
   }
 
   reset() {
     this.game.reset();
-    this.play();
     this.stopTimer();
+    this.audioManager.setGameOverSoundPlaying(false);
   }
 
   updateView() {
     const state = this.game.getState();
     if (state.isGameOver) {
-      this.sound.stop();
+      this.audioManager.stop();
       this.view.renderEndScreen(state);
+      this.audioManager.playGameOver();
     } else if (!this.isPlaying) {
       this.view.renderPauseScreen();
     } else {
@@ -77,22 +68,6 @@ export default class Controller {
     }
   }
 
-  toggleMusic() {
-    if (this.isPlaying) {
-      if (this.sound.playing()) {
-        this.sound.pause();
-      } else {
-        this.sound.play();
-      }
-      this.updateView();
-    }
-  }
-
-  changeVolume() {
-    const volume = parseFloat(this.volumeSlider.value);
-    this.sound.volume(volume);
-  }
-
   handleKeyDown(event) {
     const state = this.game.getState();
     switch (event.keyCode) {
@@ -100,11 +75,14 @@ export default class Controller {
         if (state.isGameOver) {
           this.reset();
           this.startTimer();
+          this.audioManager.play();
         } else if (this.isPlaying) {
           this.pause();
+          this.audioManager.pause();
         } else {
           this.play();
           this.startTimer();
+          this.audioManager.resume();
         }
         break;
       case 37: //LEFT ARROW
