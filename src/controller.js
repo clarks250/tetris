@@ -9,6 +9,7 @@ export default class Controller {
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
     document.addEventListener("keyup", this.handleKeyUp.bind(this));
     this.view.renderStartScreen();
+     this.volumeSlider = document.getElementById('volumeSlider');
   }
 
   update() {
@@ -41,7 +42,7 @@ export default class Controller {
     if (state.isGameOver) {
       this.audioManager.stop();
       this.view.renderEndScreen(state);
-      this.audioManager.playGameOver();
+      this.audioManager.playGameOver(this.volumeSlider.value);
     } else if (!this.isPlaying) {
       this.view.renderPauseScreen();
     } else {
