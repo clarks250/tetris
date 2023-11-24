@@ -93,6 +93,7 @@ export default class Controller {
         this.stopTimer();
         game.movePieceDown();
         this.updateView();
+        event.preventDefault();
         break;
     }
   }
@@ -100,6 +101,7 @@ export default class Controller {
     switch (event.keyCode) {
       case 40: //DOWN ARROW
         this.startTimer();
+        event.preventDefault();
         break;
     }
   }
