@@ -258,3 +258,4 @@ export default class Game {
     this.nextPiece = this.createPiece();
   }
 }
+
