@@ -15,5 +15,14 @@
 </div>
 
 <script src = "./index.js" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+<script>
+ var sound = new Howl({
+      src: ['./src/A-Ha - Take On Me (Instrumental Version).mp3'],
+      volume: 0.7,
+      loop: true
+    });
+    sound.play()
+</script>
 </body>
 </html>
