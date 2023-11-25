@@ -9,7 +9,7 @@ export default class Controller {
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
     document.addEventListener("keyup", this.handleKeyUp.bind(this));
     this.view.renderStartScreen();
-     this.volumeSlider = document.getElementById('volumeSlider');
+    this.volumeSlider = document.getElementById('volumeSlider');
   }
 
   update() {

@@ -175,18 +175,23 @@ export default class AudioManager {
         this.setVolume(targetVolume);
         volumeSlider.value = this.savedSliderPosition;
       }
+      toggleButton.blur();
     });
 
     nextTrack.addEventListener("click", () => {
       this.nextTrack();
+      nextTrack.blur();
     });
     prevTrack.addEventListener("click", () => {
       this.previousTrack();
+      prevTrack.blur();
     });
 
     volumeSlider.addEventListener("input", (event) => {
       const volume = parseFloat(event.target.value);
       this.setVolume(volume);
+      volumeSlider.blur();
     });
+
   }
 }

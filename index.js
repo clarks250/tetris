@@ -7,7 +7,7 @@ const root = document.querySelector("#root");
 
 const audioManager = new AudioManager();
 const game = new Game(audioManager);
-const view = new View(root, 480, 640, 20, 10);
+const view = new View(root, 560, 560, 20, 10);
 const controller = new Controller(game, view, audioManager);
 audioManager.initializeButtons();
 

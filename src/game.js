@@ -43,14 +43,14 @@ export default class Game {
   }
 
   reset(){
-   this.score = 0;
-   this.lines = 0;
-   this.topOut = false;
-   this.playfield = this.createPlayfield();
-  
-   this.activePiece = this.createPiece();
-   this.nextPiece = this.createPiece();
-  
+    this.score = 0;
+    this.lines = 0;
+    this.topOut = false;
+    this.playfield = this.createPlayfield();
+    
+    this.activePiece = this.createPiece();
+    this.nextPiece = this.createPiece();
+    
   }
 
   createPlayfield() {

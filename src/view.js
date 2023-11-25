@@ -19,21 +19,19 @@ export default class View {
     this.context = this.canvas.getContext("2d");
 
     this.playfieldBorderWidth = 4;
-    this.playfieldX = this.playfieldBorderWidth;
+    this.playfieldX = this.playfieldBorderWidth + this.width / 4;
     this.playfieldY = this.playfieldBorderWidth;
-    this.playfieldWidth = (this.width * 2) / 3;
+    this.playfieldWidth = this.width / 2;
     this.playfieldHeight = this.height;
-    this.playfieldInnerWidth =
-      this.playfieldWidth - this.playfieldBorderWidth * 2;
-    this.playfieldInnerHeight =
-      this.playfieldHeight - this.playfieldBorderWidth * 2;
+    this.playfieldInnerWidth = this.playfieldWidth - this.playfieldBorderWidth * 2;
+    this.playfieldInnerHeight = this.playfieldHeight - this.playfieldBorderWidth * 2;
 
     this.blockWidth = this.playfieldInnerWidth / columns;
     this.blockHeight = this.playfieldInnerHeight / rows;
 
-    this.panelX = this.playfieldWidth + 30;
+    this.panelX = (this.playfieldWidth / 2) * 3 + 15;
     this.panelY = 0;
-    this.panelWidth = this.width / 3;
+    this.panelWidth = this.width / 4;
     this.panelHeight = this.height;
 
     this.element.appendChild(this.canvas);
@@ -123,7 +121,11 @@ export default class View {
 
     this.context.strokeStyle = "white";
     this.context.lineWidth = this.playfieldBorderWidth;
-    this.context.strokeRect(0, 0, this.playfieldWidth, this.playfieldHeight);
+    this.context.strokeRect(
+      this.playfieldX - this.playfieldBorderWidth, 
+      this.playfieldY - this.playfieldBorderWidth,
+      this.playfieldWidth,
+      this.playfieldHeight);
   }
 
   renderPanel({ level, score, lines, nextPiece }) {
