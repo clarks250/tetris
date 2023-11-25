@@ -90,9 +90,10 @@ export default class Controller {
         game.movePieceLeft();
         this.updateView();
         break;
-      case 32: //UP ARROW
+      case 32: //SPACE
         game.rotatePiece();
         this.updateView();
+        event.preventDefault();
         break;
       case 39: //RIGHT ARROW
         game.movePieceRight();
