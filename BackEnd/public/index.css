@@ -1,0 +1,15 @@
+td, th {
+    padding:5px;
+    min-width:90px;
+    max-width:200px; 
+    text-align:start;
+}
+
+.btn {
+    padding:4px; 
+    border:1px solid #333; 
+    background-color: #eee; 
+    border-radius: 2px; 
+    margin:5px; 
+    cursor:pointer;
+}
