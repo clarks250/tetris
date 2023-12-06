@@ -12,6 +12,8 @@ const SCORES_FILE_PATH = 'data/scores.json';
 
 let userScores;
 
+app.use(express.static("FrontEnd"));
+
 function loadScores() {
   try {
     const data = fs.readFileSync(SCORES_FILE_PATH, 'utf8');
@@ -68,6 +70,12 @@ io.on('connection', (socket) => {
 app.get('/scores', (req, res) => {
   const scores = loadScores();
   res.json(scores);
+});
+
+app.get("/tetrus", function(req, res){
+        
+  res.sendFile(__dirname + '/FrontEnd/index.html')
+  console.log(__dirname + '/FrontEnd/index.html')
 });
 
 server.listen(PORT, () => {
