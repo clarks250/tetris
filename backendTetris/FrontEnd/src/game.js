@@ -9,8 +9,12 @@ export default class Game {
   constructor(audioManager){
     this.reset();
     this.audioManager = audioManager;
+    this.resetGameOverNotification();
   }
 
+  resetGameOverNotification() {
+    this.gameOverNotified = false;
+}
   get level() {
     return Math.floor(this.lines * 0.1);
   }
@@ -50,7 +54,7 @@ export default class Game {
     
     this.activePiece = this.createPiece();
     this.nextPiece = this.createPiece();
-    
+    this.resetGameOverNotification();
   }
 
   createPlayfield() {
@@ -146,7 +150,11 @@ export default class Game {
   }
 
   movePieceDown() {
-    if (this.topOut) return;
+    if (this.topOut &&!this.gameOverNotified){
+      console.log(`Game Over! Final Score: ${this.score}`);
+      this.gameOverNotified = true;
+    return;
+    }
     this.activePiece.y += 1;
     if (this.hasCollision()) {
       this.activePiece.y -= 1;

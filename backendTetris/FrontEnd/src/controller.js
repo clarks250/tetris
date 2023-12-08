@@ -40,7 +40,6 @@ export default class Controller {
   updateView() {
     const state = this.game.getState();
     if (state.isGameOver) {
-      //ОБНОВЛЕНИЕ СЧЕТА ДЛЯ БЭКА
       this.audioManager.stop();
       this.view.renderEndScreen(state);
       this.audioManager.playGameOver(this.volumeSlider.value);
