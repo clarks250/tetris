@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TETRIS BW</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+    />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="root">
+      <h1>
+        <span style="color: white">T</span><span style="color: white">E</span
+        ><span style="color: white">T</span><span style="color: white">R</span
+        ><span style="color: white">I</span><span style="color: white">S</span>
+      </h1>
+    </div>
+    <div class="music">
+      <div>
+        <button id="toggleButton">Mute</button>
+        <input
+          type="range"
+          id="volumeSlider"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0.8"
+        />
+        <button id="prevTrack">Previous Track</button>
+        <button id="nextTrack">Next Track</button>
+      </div>
+    </div>
+    <script src="./index.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+  </body>
+</html>
