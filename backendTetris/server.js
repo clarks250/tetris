@@ -26,6 +26,13 @@ app.get("/tetrus", function(req, res){
   console.log(__dirname + '/FrontEnd/index.html')
 });
 
+app.get("/form", function(req, res){
+        
+  res.sendFile(__dirname + '/FrontEnd/form.html')
+  console.log(__dirname + '/FrontEnd/form.html')
+});
+
+
 app.get("/", function(req, res){
         
   res.render(__dirname + 'index', {title: 'asdas'})
