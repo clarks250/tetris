@@ -5,6 +5,7 @@ export default class Controller {
     this.audioManager = audioManager;
     this.isPlaying = false;
     this.intervalId = null;
+    this.isStartScreen = true;
 
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
     document.addEventListener("keyup", this.handleKeyUp.bind(this));
@@ -71,40 +72,48 @@ export default class Controller {
 
   handleKeyDown(event) {
     const state = this.game.getState();
-    switch (event.keyCode) {
-      case 13: //ENTER
-        if (state.isGameOver) {
-          this.reset();
-          this.startTimer();
-          this.audioManager.play();
-        } else if (this.isPlaying) {
-          this.pause();
-          this.audioManager.pause();
-        } else {
-          this.play();
-          this.startTimer();
-          this.audioManager.resume();
-        }
-        break;
-      case 37: //LEFT ARROW
-        game.movePieceLeft();
-        this.updateView();
-        break;
-      case 32: //SPACE
-        game.rotatePiece();
-        this.updateView();
+  
+    if (event.keyCode === 13) {
+      if (state.isStartScreen || state.isGameOver) {
+        this.isStartScreen = false;
+        this.reset();
+        this.startTimer();
+        this.audioManager.play();
         event.preventDefault();
-        break;
-      case 39: //RIGHT ARROW
-        game.movePieceRight();
-        this.updateView();
-        break;
-      case 40: //DOWN ARROW
-        this.stopTimer();
-        game.movePieceDown();
-        this.updateView();
+      } else if (this.isPlaying) {
+        this.pause();
+        this.audioManager.pause();
         event.preventDefault();
-        break;
+      } else {
+        this.play();
+        this.startTimer();
+        this.audioManager.resume();
+        event.preventDefault();
+      }
+    } else if (!this.isPlaying && !state.isStartScreen) {
+      event.preventDefault();
+    } else {
+      switch (event.keyCode) {
+        case 37: // LEFT ARROW
+          this.game.movePieceLeft();
+          this.updateView();
+          break;
+        case 32: // SPACE
+          this.game.rotatePiece();
+          this.updateView();
+          event.preventDefault();
+          break;
+        case 39: // RIGHT ARROW
+          this.game.movePieceRight();
+          this.updateView();
+          break;
+        case 40: // DOWN ARROW
+          this.stopTimer();
+          this.game.movePieceDown();
+          this.updateView();
+          event.preventDefault();
+          break;
+      }
     }
   }
   handleKeyUp(event) {
