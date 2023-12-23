@@ -86,8 +86,8 @@ export default class Controller {
     const isInputFocused = document.activeElement.tagName === 'INPUT';
 
     if (event.keyCode === 13 && !isInputFocused && !this.view.isLoginFormVisible) {
-      if ((state.isStartScreen || state.isGameOver) && !this.isStartScreen) {
-        this.isStartScreen = false;
+      this.isStartScreen = false;
+      if (state.isGameOver && !this.isStartScreen) {
         this.reset();
         this.startTimer();
         this.audioManager.play();
