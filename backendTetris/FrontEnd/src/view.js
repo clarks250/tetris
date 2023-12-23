@@ -79,8 +79,35 @@ export default class View {
 
     this.element.appendChild(formContainer);
 
-    submitButton.addEventListener("click", () => {
+    submitButton.addEventListener("click", async () => {
       console.log("Form submitted!");
+    
+      const username = usernameInput.value;
+      const telegram = telegramInput.value;
+      if (!username || !telegram) {
+        console.error('Missing required fields');
+        return;
+      }
+    
+      try {
+        const response = await fetch('/api/createUserScore', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: username, telegram, score: 0 }),
+        });
+    
+        if (response.ok) {
+          const newUserScore = await response.json();
+          console.log('Form submitted successfully:', newUserScore);
+        } else {
+          console.error('Error submitting form:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    
       formContainer.remove();
       this.isLoginFormVisible = false;
       this.renderStartScreen();
