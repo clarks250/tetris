@@ -6,10 +6,12 @@ export default class Controller {
     this.isPlaying = false;
     this.intervalId = null;
     this.isStartScreen = true;
+    this.isLoginScreenVisible = true;
+    this.downKeyPressed = false;
 
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
     document.addEventListener("keyup", this.handleKeyUp.bind(this));
-    this.view.renderStartScreen();
+    this.view.renderLoginScreen();
     this.volumeSlider = document.getElementById('volumeSlider');
   }
 
@@ -23,7 +25,6 @@ export default class Controller {
     this.updateView();
     this.startTimer();
     this.audioManager.play();
-
   }
 
   pause() {
@@ -70,11 +71,22 @@ export default class Controller {
     }
   }
 
-  handleKeyDown(event) {
+  hideLoginForm() {
+    this.view.isLoginFormVisible = false;
+    this.isLoginScreenVisible = false; 
+  }
+
+  renderLoginForm() {
+    this.hideLoginForm();
+    this.view.renderLoginForm();
+  }
+
+ handleKeyDown(event) {
     const state = this.game.getState();
-  
-    if (event.keyCode === 13) {
-      if (state.isStartScreen || state.isGameOver) {
+    const isInputFocused = document.activeElement.tagName === 'INPUT';
+
+    if (event.keyCode === 13 && !isInputFocused && !this.view.isLoginFormVisible) {
+      if ((state.isStartScreen || state.isGameOver) && !this.isStartScreen) {
         this.isStartScreen = false;
         this.reset();
         this.startTimer();
@@ -90,7 +102,7 @@ export default class Controller {
         this.audioManager.resume();
         event.preventDefault();
       }
-    } else if (!this.isPlaying && !state.isStartScreen) {
+    } else if (!this.isPlaying && !state.isStartScreen && !isInputFocused) {
       event.preventDefault();
     } else {
       switch (event.keyCode) {
@@ -108,10 +120,10 @@ export default class Controller {
           this.updateView();
           break;
         case 40: // DOWN ARROW
-          this.stopTimer();
-          this.game.movePieceDown();
-          this.updateView();
-          event.preventDefault();
+            this.stopTimer();
+            this.game.movePieceDown();
+            this.updateView();
+            event.preventDefault();
           break;
       }
     }
